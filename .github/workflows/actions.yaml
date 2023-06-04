@@ -30,7 +30,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           source: "deploy/*"
           target: "online_sale"
-          strip_components: 1
       - name: Run compose
         uses: appleboy/ssh-action@master
         with:
@@ -50,6 +49,3 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             docker system prune -a -f
-          
-
-
