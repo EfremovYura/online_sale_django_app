@@ -20,7 +20,7 @@ class Seller(models.Model):
     street = models.CharField(verbose_name='Улица')
     house_number = models.CharField(verbose_name='Номер дома')
 
-    products = models.ManyToManyField('products.Product', verbose_name='Продукты', null=True, blank=True)
+    products = models.ManyToManyField('products.Product', verbose_name='Продукты', blank=True)
     provider = models.ForeignKey('sellers.Seller', on_delete=models.PROTECT, verbose_name="Поставщик", null=True,
                                  blank=True)
     debt = models.FloatField(verbose_name="Задолженность перед поставщиком", default=0.00)
