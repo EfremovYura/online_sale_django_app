@@ -1,0 +1,32 @@
+version: '1.0'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    restart: always
+    volumes:
+      - pg_online_sale_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: pg_isready -U ${DB_USER} -d ${DB_NAME}
+      timeout: 3s
+      retries: 10
+      interval: 3s
+
+  api:
+    image: tempyura/online_sale:latest
+    env_file: .env
+    environment:
+      DB_HOST: db
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - django_static:/opt/static
+
+volumes:
+  pg_online_sale_data:
+  django_static:
